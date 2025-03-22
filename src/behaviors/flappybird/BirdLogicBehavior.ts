@@ -1,6 +1,5 @@
 import {Inject, LogicBehavior, Vector3} from "sprunk-engine";
 import {FlappGameManagerLogicBehavior} from "./FlappGameManagerLogicBehavior.ts";
-import {GameState} from "../../models/GameState.ts";
 
 /**
  * Bird physics and behavior logic
@@ -13,11 +12,9 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
     private _gravity: number = 9.81;
     private _flapStrength: number = 4.0;
     private _rotation: number = 0;
-    private _isDead: boolean = false;
     
     public tick(deltaTime: number): void {
-        if(this._gameManager.getGameState() !== GameState.PLAYING) return;
-        if (this._isDead) return;
+        if(!this._gameManager.isGamePlaying()) return;
         
         // Apply gravity
         this._velocity.y -= this._gravity * deltaTime;
@@ -42,7 +39,7 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
      */
     public flap(): void {
         this._gameManager.wantToFlap();
-        if (this._isDead) return;
+        if(!this._gameManager.isGamePlaying()) return;
         this._velocity.y = this._flapStrength;
     }
     
@@ -50,14 +47,7 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
      * Kill the bird and stop movement
      */
     public die(): void {
-        this._isDead = true;
+        this._gameManager.gameOver();
         this._velocity.set(0, 0, 0);
-    }
-    
-    /**
-     * Check if the bird is dead
-     */
-    public isDead(): boolean {
-        return this._isDead;
     }
 } 

@@ -23,12 +23,8 @@ export class FlappGameManagerLogicBehavior extends LogicBehavior<void> {
      * Try to change the game state to perform the appropriate action.
      */
     public wantToFlap(): void {
-        switch (this._gameState) {
-            case GameState.START:
-                this.startGame();
-                break;
-            case GameState.GAMEOVER:
-                this.resetGame();
+        if(this._gameState !== GameState.PLAYING) {
+            this.startGame();
         }
     }
 
@@ -60,7 +56,7 @@ export class FlappGameManagerLogicBehavior extends LogicBehavior<void> {
      * Start the game
      */
     private startGame(): void {
-        if (this._gameState === GameState.START) {
+        if (this._gameState === GameState.START || this._gameState === GameState.GAMEOVER) {
             this.changeGameState(GameState.PLAYING);
         }
     }
@@ -68,17 +64,10 @@ export class FlappGameManagerLogicBehavior extends LogicBehavior<void> {
     /**
      * End the game and show game over
      */
-    private gameOver(): void {
+    public gameOver(): void {
         if (this._gameState === GameState.PLAYING) {
             this.changeGameState(GameState.GAMEOVER);
         }
-    }
-    
-    /**
-     * Reset the game to the start state
-     */
-    private resetGame(): void {
-        this.changeGameState(GameState.START);
     }
 
     private changeGameState(newState: GameState): void {

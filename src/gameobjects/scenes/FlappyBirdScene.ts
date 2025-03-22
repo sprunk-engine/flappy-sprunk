@@ -5,8 +5,6 @@ import { GroundGameObject } from "../GroundGameObject.ts";
 import { ScoreGameObject } from "../ScoreGameObject.ts";
 import { FlappGameManagerLogicBehavior } from "../../behaviors/flappybird/FlappGameManagerLogicBehavior.ts";
 import {GameState} from "../../models/GameState.ts";
-import {FreeLookCameraController} from "../../behaviors/camera/FreeLookCameraController.ts";
-import {FreeLookCameraKeyboardMouseInput} from "../../behaviors/camera/FreeLookCameraKeyboardMouseInput.ts";
 
 export class FlappyBirdScene extends GameObject {
     private _bird: BirdGameObject | null = null;

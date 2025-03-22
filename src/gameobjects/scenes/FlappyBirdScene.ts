@@ -38,9 +38,11 @@ export class FlappyBirdScene extends GameObject {
         this.addChild(this._bird);
 
         /* --- Ground --- */
-        const ground = new GroundGameObject("Ground");
-        this.addChild(ground);
-        ground.transform.position.set(0, -4, 0);
+        for (let i = 0; i < 6; i++) {
+            const ground = new GroundGameObject(i, 6);
+            this.addChild(ground);
+            ground.transform.position.set(i *  10 - 3 * 10 , -4, 0);
+        }
 
         /* --- Pipe Spawner --- */
         const pipeSpawner = new PipeSpawnerGameObject("PipeSpawner");

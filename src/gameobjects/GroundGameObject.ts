@@ -6,6 +6,15 @@ import {ScrollingSpeedManagerDriven} from "../behaviors/flappybird/ScrollingSpee
  * The ground for Flappy Bird
  */
 export class GroundGameObject extends GameObject {
+    private _id : number;
+    private _maxId : number;
+
+    constructor(id : number, maxId : number) {
+        super("Ground");
+        this._id = id;
+        this._maxId = maxId;
+    }
+
     protected onEnable() {
         super.onEnable();
         
@@ -19,7 +28,7 @@ export class GroundGameObject extends GameObject {
         
         // Add ground scrolling logic - using game manager for speed control
         // The x and z values remain 0, y is set to negative game speed, keeping 0.5 for repeat offset
-        const scrollingLogic = new RepeatableScrollingLogicBehavior(0, 0, 0.5);
+        const scrollingLogic = new RepeatableScrollingLogicBehavior(this._maxId*5, -this._maxId*5, 0);
         this.addBehavior(scrollingLogic);
         this.addBehavior(new ScrollingSpeedManagerDriven(scrollingLogic));
     }

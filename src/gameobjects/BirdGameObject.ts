@@ -26,4 +26,11 @@ export class BirdGameObject extends GameObject {
         // Set initial scale to make bird the right size
         this.transform.scale.set(1, 1, 1);
     }
+    
+    /**
+     * Get the bird logic behavior
+     */
+    public getBirdLogic(): BirdLogicBehavior | null {
+        return this._logicBehavior;
+    }
 } 

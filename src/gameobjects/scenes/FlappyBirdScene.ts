@@ -33,9 +33,6 @@ export class FlappyBirdScene extends GameObject {
         this._bird = new BirdGameObject("Bird");
         this.addChild(this._bird);
         this._bird.transform.position.set(-3, 0, 0);
-        this._bird.getBirdLogic()?.onTryToFlap.addObserver(() => {
-            this._gameManager?.wantToFlap();
-        });
 
         /* --- Ground --- */
         const ground = new GroundGameObject("Ground");
@@ -72,6 +69,7 @@ export class FlappyBirdScene extends GameObject {
     }
 
     private onGameStateChange(state: GameState): void {
+        console.log("Game state changed to: " + state);
         if (state === GameState.GAMEOVER) {
             this.showGameOver();
         }

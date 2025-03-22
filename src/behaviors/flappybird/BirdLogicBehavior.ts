@@ -1,10 +1,13 @@
-import { LogicBehavior, Vector3, Event } from "sprunk-engine";
+import {Inject, LogicBehavior, Vector3} from "sprunk-engine";
+import {FlappGameManagerLogicBehavior} from "./FlappGameManagerLogicBehavior.ts";
+import {GameState} from "../../models/GameState.ts";
 
 /**
  * Bird physics and behavior logic
  */
 export class BirdLogicBehavior extends LogicBehavior<void> {
-    public onTryToFlap: Event<void> = new Event();
+    @Inject(FlappGameManagerLogicBehavior, true)
+    private _gameManager!: FlappGameManagerLogicBehavior;
 
     private _velocity: Vector3 = new Vector3(0, 0, 0);
     private _gravity: number = 9.81;
@@ -13,6 +16,7 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
     private _isDead: boolean = false;
     
     public tick(deltaTime: number): void {
+        if(this._gameManager.getGameState() !== GameState.PLAYING) return;
         if (this._isDead) return;
         
         // Apply gravity
@@ -37,7 +41,7 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
      * Make the bird flap upwards
      */
     public flap(): void {
-        this.onTryToFlap.emit();
+        this._gameManager.wantToFlap();
         if (this._isDead) return;
         this._velocity.y = this._flapStrength;
     }

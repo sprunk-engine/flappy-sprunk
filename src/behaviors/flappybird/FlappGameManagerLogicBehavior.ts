@@ -9,10 +9,12 @@ import {ScoreLogicBehavior} from "../logic/ScoreLogicBehavior.ts";
  */
 export class FlappGameManagerLogicBehavior extends LogicBehavior<void> {
     public onGameStateChange: Event<GameState> = new Event();
+    public onSpeedChange: Event<number> = new Event();
 
     private _gameState: GameState = GameState.START;
     private _scoreManager: ScoreLogicBehavior | null = null;
-    private _birdTransform: Transform;
+    private _birdTransform: Transform | null = null;
+    private _gameSpeed: number = 5.0;
     
     constructor(scoreManager: ScoreLogicBehavior) {
         super();
@@ -48,7 +50,7 @@ export class FlappGameManagerLogicBehavior extends LogicBehavior<void> {
     /**
      * Get the bird transform
      */
-    public get birdTransform(): Transform {
+    public get birdTransform(): Transform | null {
         return this._birdTransform;
     }
 
@@ -56,7 +58,7 @@ export class FlappGameManagerLogicBehavior extends LogicBehavior<void> {
      * Set the bird transform
      * @param value
      */
-    public set birdTransform(value: Transform) {
+    public set birdTransform(value: Transform | null) {
         this._birdTransform = value;
     }
 
@@ -67,6 +69,20 @@ export class FlappGameManagerLogicBehavior extends LogicBehavior<void> {
         return this._gameState === GameState.PLAYING;
     }
 
+    /**
+     * Get the current game speed
+     */
+    public getGameSpeed(): number {
+        return this._gameState === GameState.PLAYING ? this._gameSpeed : 0;
+    }
+
+    /**
+     * Set the game speed
+     * @param speed The new game speed
+     */
+    public setGameSpeed(speed: number): void {
+        this._gameSpeed = speed;
+    }
 
     /**
      * Start the game

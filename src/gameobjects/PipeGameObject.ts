@@ -1,5 +1,6 @@
 import { GameObject, SpriteRenderBehavior } from "sprunk-engine";
 import { PipeLogicBehavior } from "../behaviors/flappybird/PipeLogicBehavior";
+import {ScrollingSpeedManagerDriven} from "../behaviors/flappybird/ScrollingSpeedManagerDriven.ts";
 
 /**
  * Represents a single pipe obstacle in Flappy Bird
@@ -37,6 +38,8 @@ export class PipeGameObject extends GameObject {
         }
 
         // Add pipe logic
-        this.addBehavior(new PipeLogicBehavior());
+        const scrollingLogic = new PipeLogicBehavior(0);
+        this.addBehavior(scrollingLogic);
+        this.addBehavior(new ScrollingSpeedManagerDriven(scrollingLogic));
     }
 } 

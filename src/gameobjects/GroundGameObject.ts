@@ -1,13 +1,11 @@
 import { GameObject, SpriteRenderBehavior } from "sprunk-engine";
-import { ScrollingLogicBehavior } from "../behaviors/transform/ScrollingLogicBehavior";
 import {RepeatableScrollingLogicBehavior} from "../behaviors/transform/RepeatableScrollingLogicBehavior.ts";
+import {ScrollingSpeedManagerDriven} from "../behaviors/flappybird/ScrollingSpeedManagerDriven.ts";
 
 /**
  * The ground for Flappy Bird
  */
 export class GroundGameObject extends GameObject {
-    private _scrollingLogic: ScrollingLogicBehavior | null = null;
-
     protected onEnable() {
         super.onEnable();
         
@@ -21,11 +19,8 @@ export class GroundGameObject extends GameObject {
         
         // Add ground scrolling logic - using game manager for speed control
         // The x and z values remain 0, y is set to negative game speed, keeping 0.5 for repeat offset
-        this._scrollingLogic = new RepeatableScrollingLogicBehavior(0, 0, 0.5);
-        this.addBehavior(this._scrollingLogic);
-    }
-
-    public get scrollingLogic(): ScrollingLogicBehavior {
-        return this._scrollingLogic!;
+        const scrollingLogic = new RepeatableScrollingLogicBehavior(0, 0, 0.5);
+        this.addBehavior(scrollingLogic);
+        this.addBehavior(new ScrollingSpeedManagerDriven(scrollingLogic));
     }
 }

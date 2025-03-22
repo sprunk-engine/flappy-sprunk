@@ -9,8 +9,8 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
     private _gameManager!: FlappGameManagerLogicBehavior;
 
     private _velocity: Vector3 = new Vector3(0, 0, 0);
-    private _gravity: number = 9.81;
-    private _flapStrength: number = 4.0;
+    private _gravity: number = 9.81*3;
+    private _flapStrength: number = 9.81;
     private _rotation: number = 0;
 
     protected onEnable() {
@@ -30,7 +30,7 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
         );
         
         // Rotate bird based on velocity (diving down or flapping up)
-        this._rotation = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, this._velocity.y * 2));
+        this._rotation = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, this._velocity.y * 0.5));
         this.gameObject.transform.rotation.setFromEulerAngles(0, 0, this._rotation);
         
         // Check if bird has hit the ground

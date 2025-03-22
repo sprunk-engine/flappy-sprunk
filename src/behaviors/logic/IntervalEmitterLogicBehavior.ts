@@ -4,8 +4,8 @@ import { LogicBehavior } from "sprunk-engine";
  * Logic behavior that emits events at regular intervals
  */
 export class IntervalEmitterLogicBehavior extends LogicBehavior<void> {
-    private _timeSinceLastEmit: number = 0;
-    private _emitInterval: number;
+    protected _timeSinceLastEmit: number = 0;
+    protected _emitInterval: number;
     private _isActive: boolean = true;
     
     /**
@@ -43,5 +43,17 @@ export class IntervalEmitterLogicBehavior extends LogicBehavior<void> {
 
     public isPlaying(): boolean {
         return this._isActive;
+    }
+
+    public getTimeSinceLastEmit(): number {
+        return this._timeSinceLastEmit;
+    }
+    
+    public getCurrentInterval(): number {
+        return this._emitInterval;
+    }
+    
+    public setTimeSinceLastEmit(time: number): void {
+        this._timeSinceLastEmit = time;
     }
 } 

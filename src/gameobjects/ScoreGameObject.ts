@@ -16,6 +16,7 @@ export class ScoreGameObject extends GameObject {
             "assets/fonts/Sprunthrax/Sprunthrax-SemiBold-msdf.json", 
             { centered: true, pixelScale: 1/64, color: [1, 1, 1, 1] }
         );
+        textRenderer.text = "Score: 0";
         this.addBehavior(textRenderer);
         
         // Add score logic

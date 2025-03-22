@@ -5,6 +5,8 @@ import { ScrollingLogicBehavior } from "../behaviors/transform/ScrollingLogicBeh
  * The ground for Flappy Bird
  */
 export class GroundGameObject extends GameObject {
+    private _scrollingLogic: ScrollingLogicBehavior | null = null;
+
     protected onEnable() {
         super.onEnable();
         
@@ -16,7 +18,13 @@ export class GroundGameObject extends GameObject {
         // Scale the ground to cover the width of the screen
         this.transform.scale.set(10, 1, 1);
         
-        // Add ground scrolling logic
-        this.addBehavior(new ScrollingLogicBehavior(0, -5, 0.5));
+        // Add ground scrolling logic - using game manager for speed control
+        // The x and z values remain 0, y is set to negative game speed, keeping 0.5 for repeat offset
+        this._scrollingLogic = new ScrollingLogicBehavior(0, 0, 0.5);
+        this.addBehavior(this._scrollingLogic);
     }
-} 
+
+    public get scrollingLogic(): ScrollingLogicBehavior {
+        return this._scrollingLogic!;
+    }
+}

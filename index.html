@@ -37,9 +37,22 @@
         max-height: calc(100vh - 20px);
 
       }
+
+      #background{
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        background-image: url('/assets/sprites/background-day.png');
+        background-repeat: repeat-x;
+        background-size: auto 100%;
+      }
     </style>
   </head>
   <body>
+    <div id="background"></div>
     <canvas id="app"></canvas>
     <script type="module" src="/src/main.ts"></script>
   </body>

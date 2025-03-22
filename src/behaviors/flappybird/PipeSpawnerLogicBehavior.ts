@@ -8,10 +8,6 @@ import { FlappGameManagerLogicBehavior } from "./FlappGameManagerLogicBehavior.t
 export class PipeSpawnerLogicBehavior extends LogicBehavior<void> {
     @Inject(FlappGameManagerLogicBehavior, true)
     private _gameManager!: FlappGameManagerLogicBehavior;
-    
-    constructor() {
-        super();
-    }
 
     /**
      * Try to spawn a pipe pair

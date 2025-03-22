@@ -1,19 +1,18 @@
-import { LogicBehavior, Inject } from "sprunk-engine";
+import { Inject } from "sprunk-engine";
 import { FlappGameManagerLogicBehavior } from "./FlappGameManagerLogicBehavior";
+import {ScrollingLogicBehavior} from "../transform/ScrollingLogicBehavior.ts";
 
 /**
  * Pipe logic behavior for moving pipes and collision detection
  */
-export class PipeLogicBehavior extends LogicBehavior<void> {
-    private _speed: number = 0.5;
+export class PipeLogicBehavior extends ScrollingLogicBehavior {
     private _passed: boolean = false;
     
     @Inject(FlappGameManagerLogicBehavior, true)
     private _gameManager!: FlappGameManagerLogicBehavior;
 
     public tick(deltaTime: number): void {
-        // Move pipe from right to left
-        this.gameObject.transform.position.x -= this._speed * deltaTime;
+        super.tick(deltaTime);
 
         // Check if pipe is offscreen and should be removed
         if (this.gameObject.transform.position.x < -10) {
@@ -38,7 +37,7 @@ export class PipeLogicBehavior extends LogicBehavior<void> {
         if (!this._gameManager.isGamePlaying()) return;
 
         const pipePos = this.gameObject.transform.position;
-        const birdPos = this._gameManager.birdTransform.position;
+        const birdPos = this._gameManager.birdTransform!.position;
 
         // Simple box collision check
         const pipeWidth = 1.0;

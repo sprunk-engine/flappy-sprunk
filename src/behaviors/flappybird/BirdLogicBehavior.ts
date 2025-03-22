@@ -1,9 +1,11 @@
-import { LogicBehavior, Vector3 } from "sprunk-engine";
+import { LogicBehavior, Vector3, Event } from "sprunk-engine";
 
 /**
  * Bird physics and behavior logic
  */
 export class BirdLogicBehavior extends LogicBehavior<void> {
+    public onTryToFlap: Event<void> = new Event();
+
     private _velocity: Vector3 = new Vector3(0, 0, 0);
     private _gravity: number = 9.81;
     private _flapStrength: number = 4.0;
@@ -35,6 +37,7 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
      * Make the bird flap upwards
      */
     public flap(): void {
+        this.onTryToFlap.emit();
         if (this._isDead) return;
         this._velocity.y = this._flapStrength;
     }

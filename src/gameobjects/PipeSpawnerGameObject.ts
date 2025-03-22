@@ -9,7 +9,7 @@ export class PipeSpawnerGameObject extends GameObject {
     protected onEnable() {
         super.onEnable();
 
-        const intervalEmitter = new IntervalEmitterLogicBehavior(2);
+        const intervalEmitter = new IntervalEmitterLogicBehavior(1);
         this.addBehavior(intervalEmitter);
 
         const pipeSpawnerLogic = new PipeSpawnerLogicBehavior();

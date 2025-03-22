@@ -33,7 +33,7 @@ export class PipeSpawnerLogicBehavior extends LogicBehavior<void> {
             "TopPipe", true, topPipeHeight
         );
         this.gameObject.addChild(topPipe);
-        topPipe.transform.position.set(10, gapCenter + gapSize/2 + topPipeHeight/2, 0);
+        topPipe.transform.position.set(20, gapCenter + gapSize/2 + topPipeHeight/2, 0);
         
         // Bottom pipe (floor)
         const bottomPipeHeight = 12 + (gapCenter - gapSize/2); // Calculate bottom pipe height
@@ -41,6 +41,6 @@ export class PipeSpawnerLogicBehavior extends LogicBehavior<void> {
             "BottomPipe", false, bottomPipeHeight
         );
         this.gameObject.addChild(bottomPipe);
-        bottomPipe.transform.position.set(10, gapCenter - gapSize/2 - bottomPipeHeight/2, 0);
+        bottomPipe.transform.position.set(20, gapCenter - gapSize/2 - bottomPipeHeight/2, 0);
     }
 } 

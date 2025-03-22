@@ -1,4 +1,4 @@
-import {Event, LogicBehavior} from "sprunk-engine";
+import {Event, LogicBehavior, Transform} from "sprunk-engine";
 import {GameState} from "../../models/GameState.ts";
 import {ScoreLogicBehavior} from "../logic/ScoreLogicBehavior.ts";
 
@@ -12,6 +12,7 @@ export class FlappGameManagerLogicBehavior extends LogicBehavior<void> {
 
     private _gameState: GameState = GameState.START;
     private _scoreManager: ScoreLogicBehavior | null = null;
+    private _birdTransform: Transform;
     
     constructor(scoreManager: ScoreLogicBehavior) {
         super();
@@ -42,6 +43,21 @@ export class FlappGameManagerLogicBehavior extends LogicBehavior<void> {
      */
     public getGameState(): GameState {
         return this._gameState;
+    }
+
+    /**
+     * Get the bird transform
+     */
+    public get birdTransform(): Transform {
+        return this._birdTransform;
+    }
+
+    /**
+     * Set the bird transform
+     * @param value
+     */
+    public set birdTransform(value: Transform) {
+        this._birdTransform = value;
     }
 
     /**

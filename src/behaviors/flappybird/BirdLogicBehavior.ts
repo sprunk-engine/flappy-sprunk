@@ -12,7 +12,12 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
     private _gravity: number = 9.81;
     private _flapStrength: number = 4.0;
     private _rotation: number = 0;
-    
+
+    protected onEnable() {
+        super.onEnable();
+        this._gameManager.birdTransform = this.gameObject.transform;
+    }
+
     public tick(deltaTime: number): void {
         if(!this._gameManager.isGamePlaying()) return;
         

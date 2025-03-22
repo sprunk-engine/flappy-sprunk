@@ -1,10 +1,8 @@
-# Sprunk Empty Project - With Quick Start Setup
+# Flappy Sprunk - A 2D sprunk example
 
 ## Description
-This is an empty [sprunk](https://sprunk-engine.com) project that use [Vite](https://vitejs.dev/).
-This project is a starting point for any game project that use the sprunk engine with TypeScript.
-This comme pre-configured with the sprunk engine, Vite configuration, standard shaders and font, class diagram and site generation (published on GitHub pages).
-All of this ready to run in a pre-configured CI/CD pipeline!
+This is a [sprunk](https://sprunk-engine.com) project that use [Vite](https://vitejs.dev/).
+The goal is to create a 2D (sprite based) game with the sprunk engine.
 
 ## Getting Started
 
@@ -50,13 +48,23 @@ You can then deploy these files to an any web server.
 │       └───fonts           # Font files
 ```
 ### Class syntax
-Describe your coding guidelines and style here
+The classes are written in order to follow the [Google TypeScript style guidelines](https://google.github.io/styleguide/tsguide.html#classes)**
 
 ### Workflow
-Describe your workflow here (branching model, commit message convention, etc.)
+* [Gitflow](https://www.atlassian.com/fr/git/tutorials/comparing-workflows/gitflow-workflow#:~:text=Gitflow%20est%20l'un%20des,les%20hotfix%20vers%20la%20production.)
+* [How to commit](https://www.conventionalcommits.org/en/v1.0.0/)
+* [How to use your workflow](https://nvie.com/posts/a-successful-git-branching-model/)
+* Propose a new feature in [Jira](https://ejcpnvprojects.atlassian.net/jira/software/projects/SPR/boards/5/backlog)
+* Pull requests are open to merge in the develop branch.
+* Release on the main branch we use GitFlow and not with GitHub release.
+* When creating a new feature, the branch name must be `feature/SPR-XX-NameOfTheFeature`
+* Before merging a feature into develop, the code should be reviewed by one other person (by opening a pull request).
+* Issues related to the game engine are added to the [sprunk's github issues page](https://github.com/CPNV-ES/game-engine/issues)
+* Issues related to the game are added to the [github issues page](https://github.com/sprunk-engine/sprunk-hero/issues)
 
 ## License
-Add your license here
+Distributed under the MIT License. See LICENSE.txt for more information.
 
 ## Contact
-Add how can you be contacted here
+
+* If needed you can create an issue on GitHub we will try to respond as quickly as possible.

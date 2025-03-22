@@ -28,32 +28,20 @@ export class IntervalEmitterLogicBehavior extends LogicBehavior<void> {
             this._timeSinceLastEmit = 0;
         }
     }
-    
-    /**
-     * Sets whether the emitter is active
-     */
-    public setActive(isActive: boolean): void {
-        this._isActive = isActive;
+
+    public pause(): void {
+        this._isActive = false;
     }
-    
-    /**
-     * Gets whether the emitter is active
-     */
-    public isActive(): boolean {
-        return this._isActive;
+
+    public resume(): void {
+        this._isActive = true;
     }
-    
-    /**
-     * Sets the interval between emissions
-     */
-    public setInterval(interval: number): void {
+
+    public changeInterval(interval: number): void {
         this._emitInterval = interval;
     }
-    
-    /**
-     * Gets the interval between emissions
-     */
-    public getInterval(): number {
-        return this._emitInterval;
+
+    public isPlaying(): boolean {
+        return this._isActive;
     }
 } 

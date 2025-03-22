@@ -32,7 +32,7 @@ export class PipeSpawnerLogicBehavior extends LogicBehavior<void> {
         const topPipe = new PipeGameObject(
             "TopPipe", true, topPipeHeight
         );
-        this.gameObject.parent?.addChild(topPipe);
+        this.gameObject.addChild(topPipe);
         topPipe.transform.position.set(10, gapCenter + gapSize/2 + topPipeHeight/2, 0);
         
         // Bottom pipe (floor)
@@ -40,7 +40,7 @@ export class PipeSpawnerLogicBehavior extends LogicBehavior<void> {
         const bottomPipe = new PipeGameObject(
             "BottomPipe", false, bottomPipeHeight
         );
-        this.gameObject.parent?.addChild(bottomPipe);
+        this.gameObject.addChild(bottomPipe);
         bottomPipe.transform.position.set(10, gapCenter - gapSize/2 - bottomPipeHeight/2, 0);
     }
 } 

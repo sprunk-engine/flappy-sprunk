@@ -14,7 +14,7 @@ export class FlappGameManagerLogicBehavior extends LogicBehavior<void> {
     private _gameState: GameState = GameState.START;
     private _scoreManager: ScoreLogicBehavior | null = null;
     private _birdTransform: Transform | null = null;
-    private _gameSpeed: number = 5.0;
+    private _gameSpeed: number = 0;
     
     constructor(scoreManager: ScoreLogicBehavior) {
         super();
@@ -70,21 +70,6 @@ export class FlappGameManagerLogicBehavior extends LogicBehavior<void> {
     }
 
     /**
-     * Get the current game speed
-     */
-    public getGameSpeed(): number {
-        return this._gameState === GameState.PLAYING ? this._gameSpeed : 0;
-    }
-
-    /**
-     * Set the game speed
-     * @param speed The new game speed
-     */
-    public setGameSpeed(speed: number): void {
-        this._gameSpeed = speed;
-    }
-
-    /**
      * Start the game
      */
     private startGame(): void {
@@ -102,7 +87,32 @@ export class FlappGameManagerLogicBehavior extends LogicBehavior<void> {
         }
     }
 
+    /**
+     * Get the current game speed
+     */
+    public get gameSpeed(): number {
+        return this._gameSpeed;
+    }
+
+    private setGameSpeed(speed: number): void {
+        this._gameSpeed = speed;
+        this.onSpeedChange.emit(speed);
+    }
+
     private changeGameState(newState: GameState): void {
+        if (newState === this._gameState) return;
+        switch (newState)
+        {
+            case GameState.START:
+                this.setGameSpeed(0);
+                break;
+            case GameState.PLAYING:
+                this.setGameSpeed(5);
+                break;
+            case GameState.GAMEOVER:
+                this.setGameSpeed(0);
+                break;
+        }
         this._gameState = newState;
         this.onGameStateChange.emit(newState);
     }

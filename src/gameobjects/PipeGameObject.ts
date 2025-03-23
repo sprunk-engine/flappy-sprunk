@@ -38,7 +38,7 @@ export class PipeGameObject extends GameObject {
         }
 
         // Add pipe logic
-        const scrollingLogic = new PipeLogicBehavior(0);
+        const scrollingLogic = new PipeLogicBehavior(0, this._isTopPipe);
         this.addBehavior(scrollingLogic);
         this.addBehavior(new ScrollingSpeedManagerDriven(scrollingLogic));
     }

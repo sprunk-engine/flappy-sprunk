@@ -7,9 +7,15 @@ import {ScrollingLogicBehavior} from "../transform/ScrollingLogicBehavior.ts";
  */
 export class PipeLogicBehavior extends ScrollingLogicBehavior {
     private _passed: boolean = false;
+    private _isTopPipe: boolean;
     
     @Inject(FlappGameManagerLogicBehavior, true)
     private _gameManager!: FlappGameManagerLogicBehavior;
+
+    constructor(scrollSpeed: number, isTopPipe: boolean = false) {
+        super(scrollSpeed);
+        this._isTopPipe = isTopPipe;
+    }
 
     public tick(deltaTime: number): void {
         super.tick(deltaTime);
@@ -21,7 +27,8 @@ export class PipeLogicBehavior extends ScrollingLogicBehavior {
         }
 
         // Check if bird has passed the pipe
-        if (!this._passed && this.gameObject.transform.position.x < -3) {
+        // Only increase score for one pipe (not top pipe) to prevent double counting
+        if (!this._passed && this.gameObject.transform.position.x < -3 && !this._isTopPipe) {
             this._passed = true;
             this._gameManager.increaseScore();
         }

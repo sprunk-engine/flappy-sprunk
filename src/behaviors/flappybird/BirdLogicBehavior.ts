@@ -9,8 +9,8 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
     private _gameManager!: FlappGameManagerLogicBehavior;
 
     private _velocity: Vector3 = new Vector3(0, 0, 0);
-    private _gravity: number = 9.81*3;
-    private _flapStrength: number = 9.81;
+    private _gravity: number = 9.81*2;
+    private _flapStrength: number = 9.81/1.5;
     private _rotation: number = 0;
 
     protected onEnable() {

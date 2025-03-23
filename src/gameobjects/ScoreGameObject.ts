@@ -20,7 +20,8 @@ export class ScoreGameObject extends GameObject {
         this.addBehavior(textRenderer);
         
         // Add score logic
-        this.addBehavior(new ScoreLogicBehavior());
+        this._scoreLogic = new ScoreLogicBehavior();
+        this.addBehavior(this._scoreLogic);
 
         // Add score output behavior
         this.addBehavior(new ScoreOutputBehavior());

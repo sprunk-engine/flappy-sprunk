@@ -21,7 +21,7 @@ export class PipeLogicBehavior extends ScrollingLogicBehavior {
         super.tick(deltaTime);
 
         // Check if pipe is offscreen and should be removed
-        if (this.gameObject.transform.position.x < -10) {
+        if (this.gameObject.transform.position.x < -20) {
             this.gameObject.parent?.removeChild(this.gameObject);
             return;
         }

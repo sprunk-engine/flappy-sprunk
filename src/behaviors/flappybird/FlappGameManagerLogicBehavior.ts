@@ -108,6 +108,7 @@ export class FlappGameManagerLogicBehavior extends LogicBehavior<void> {
                 break;
             case GameState.PLAYING:
                 this.setGameSpeed(5);
+                this._scoreManager?.resetScore();
                 break;
             case GameState.GAMEOVER:
                 this.setGameSpeed(0);

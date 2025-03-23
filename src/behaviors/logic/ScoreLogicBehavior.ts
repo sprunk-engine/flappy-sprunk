@@ -17,4 +17,12 @@ export class ScoreLogicBehavior extends LogicBehavior<number> {
         this.data += 1;
         this.notifyDataChanged();
     }
+
+    /**
+     * Reset the score to 0
+     */
+    public resetScore(): void {
+        this.data = 0;
+        this.notifyDataChanged();
+    }
 } 

@@ -1,7 +1,7 @@
 {
-  "name": "sprunk-empty",
+  "name": "flappy-sprunk",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -17,6 +17,6 @@
   },
   "dependencies": {
     "reflect-metadata": "^0.2.2",
-    "sprunk-engine": "^0.4.5"
+    "sprunk-engine": "^0.4.6"
   }
 }

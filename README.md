@@ -3,6 +3,12 @@
 ## Description
 This is a [sprunk](https://sprunk-engine.com) project that use [Vite](https://vitejs.dev/).
 The goal is to create a 2D (sprite based) game with the sprunk engine.
+The game includes:
+
+- A bird character that responds to space bar presses
+- Scrolling pipes as obstacles
+- Score tracking
+- Game over state
 
 ## Getting Started
 

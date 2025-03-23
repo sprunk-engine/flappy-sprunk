@@ -1,6 +1,7 @@
 import { LogicBehavior, Inject } from "sprunk-engine";
 import { PipeGameObject } from "../../gameobjects/PipeGameObject";
 import { FlappGameManagerLogicBehavior } from "./FlappGameManagerLogicBehavior.ts";
+import { GameState } from "../../models/GameState.ts";
 
 /**
  * Logic behavior for spawning pipes when triggered
@@ -8,6 +9,23 @@ import { FlappGameManagerLogicBehavior } from "./FlappGameManagerLogicBehavior.t
 export class PipeSpawnerLogicBehavior extends LogicBehavior<void> {
     @Inject(FlappGameManagerLogicBehavior, true)
     private _gameManager!: FlappGameManagerLogicBehavior;
+
+    protected onEnable(): void {
+        super.onEnable();
+        
+        // Subscribe to game state changes
+        this._gameManager.onGameStateChange.addObserver(this.onGameStateChange.bind(this));
+    }
+
+    /**
+     * Handle game state changes
+     */
+    private onGameStateChange(state: GameState): void {
+        if (state === GameState.PLAYING) {
+            // Destroy all existing pipes when a new game starts
+            this.destroyAllPipes();
+        }
+    }
 
     /**
      * Try to spawn a pipe pair
@@ -42,5 +60,20 @@ export class PipeSpawnerLogicBehavior extends LogicBehavior<void> {
         );
         this.gameObject.addChild(bottomPipe);
         bottomPipe.transform.position.set(20, gapCenter - gapSize/2 - bottomPipeHeight/2, 0);
+    }
+
+    /**
+     * Destroy all existing pipe objects
+     */
+    private destroyAllPipes(): void {
+        // Get all children of the game object
+        const children = [...this.gameObject.children];
+        
+        // Destroy each child that is a pipe
+        for (const child of children) {
+            if (child instanceof PipeGameObject) {
+                child.destroy();
+            }
+        }
     }
 } 

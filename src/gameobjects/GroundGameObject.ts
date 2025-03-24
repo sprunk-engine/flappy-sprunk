@@ -8,7 +8,7 @@ import {ScrollingSpeedManagerDriven} from "../behaviors/flappybird/ScrollingSpee
 export class GroundGameObject extends GameObject {
     private _maxId : number;
 
-    constructor(id : number, maxId : number) {
+    constructor(maxId : number) {
         super("Ground");
         this._maxId = maxId;
     }

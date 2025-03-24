@@ -39,7 +39,7 @@ export class FlappyBirdScene extends GameObject {
 
         /* --- Ground --- */
         for (let i = 0; i < 6; i++) {
-            const ground = new GroundGameObject(i, 6);
+            const ground = new GroundGameObject(6);
             this.addChild(ground);
             ground.transform.position.set(i *  10 - 3 * 10 , -4, 0);
         }

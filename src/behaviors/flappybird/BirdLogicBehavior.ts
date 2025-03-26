@@ -9,7 +9,7 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
     @Inject(FlappGameManagerLogicBehavior, true)
     private _gameManager!: FlappGameManagerLogicBehavior;
 
-    private _flapForce: number = 12;
+    private _flapForce: number = -175;
     private _physicsEnabled: boolean = false;
 
     protected onEnable() {
@@ -41,7 +41,7 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
         
         if (rigidbody) {
             rigidbody.linearVelocity = new Vector2(0, 0);
-            rigidbody.addForce(new Vector2(0, -175));
+            rigidbody.addForce(new Vector2(0, this._flapForce));
             rigidbody.step(0.016, new Vector2(0, -9.81));
         }
     }

@@ -1,19 +1,29 @@
-import { Camera, GameObject, TextRenderBehavior } from "sprunk-engine";
+import { Camera, GameObject, TextRenderBehavior, PolygonCollider, Vector2, Color } from "sprunk-engine";
 import { BirdGameObject } from "../BirdGameObject.ts";
 import { PipeSpawnerGameObject } from "../PipeSpawnerGameObject.ts";
 import { GroundGameObject } from "../GroundGameObject.ts";
 import { ScoreGameObject } from "../ScoreGameObject.ts";
 import { FlappGameManagerLogicBehavior } from "../../behaviors/flappybird/FlappGameManagerLogicBehavior.ts";
-import {GameState} from "../../models/GameState.ts";
+import { GameState } from "../../models/GameState.ts";
+import { PolygonRenderDebugger } from "../../../.lib.example/PolygonRenderDebugger.ts";
 
 export class FlappyBirdScene extends GameObject {
     private _bird: BirdGameObject | null = null;
     private _gameManager: FlappGameManagerLogicBehavior | null = null;
     private _startTexts: GameObject | null = null;
     private _gameOverText: GameObject | null = null;
+    
+    private static readonly BOUNDARY_WIDTH = 30; // Width of the boundary walls
+    private static readonly BOUNDARY_HEIGHT = 1; // Height of the boundary colliders
+    private static readonly GAME_HEIGHT = 4.35;    // Distance from center to top/bottom
+    private static readonly GAME_OFFSET = 0.3;    // Distance from center to top/bottom
 
     protected onEnable() {
         super.onEnable();
+
+        /* --- Add Boundary Colliders --- */
+        this.createBoundary("TopBoundary", FlappyBirdScene.GAME_HEIGHT + FlappyBirdScene.GAME_OFFSET);
+        this.createBoundary("BottomBoundary", -FlappyBirdScene.GAME_HEIGHT + FlappyBirdScene.GAME_OFFSET);
 
         /* --- Camera --- */
         const cameraGo = new GameObject("Camera");
@@ -124,5 +134,31 @@ export class FlappyBirdScene extends GameObject {
 
     private resetPositions(): void {
         this._bird?.transform.position.set(-3, 0, 0);
+    }
+
+    /**
+     * Creates a boundary collider at the specified Y position
+     */
+    private createBoundary(name: string, yPosition: number): void {
+        const boundary = new GameObject(name);
+        this.addChild(boundary);
+
+        // Create wide but thin collider
+        const boundaryVertices = [
+            new Vector2(FlappyBirdScene.BOUNDARY_WIDTH/2, FlappyBirdScene.BOUNDARY_HEIGHT/2),
+            new Vector2(FlappyBirdScene.BOUNDARY_WIDTH/2, -FlappyBirdScene.BOUNDARY_HEIGHT/2),
+            new Vector2(-FlappyBirdScene.BOUNDARY_WIDTH/2, -FlappyBirdScene.BOUNDARY_HEIGHT/2),
+            new Vector2(-FlappyBirdScene.BOUNDARY_WIDTH/2, FlappyBirdScene.BOUNDARY_HEIGHT/2),
+        ];
+
+        const collider = new PolygonCollider(boundaryVertices);
+        boundary.addBehavior(collider);
+
+        // Add debug visualization
+        const debugVisual = new PolygonRenderDebugger(collider, Color.random(0.2));
+        boundary.addBehavior(debugVisual);
+
+        // Position the boundary
+        boundary.transform.position.set(0, yPosition, 0);
     }
 } 

@@ -9,6 +9,8 @@ export class PipeGameObject extends GameObject {
     private _isTopPipe: boolean;
     private _height: number;
     private _collider: PolygonCollider | null = null;
+    private static readonly PIPE_WIDTH = 1.0; // Width of the pipe
+    private static readonly GAP_SIZE = 3.0;   // Size of the gap between pipes
 
     /**
      * Create a new pipe
@@ -25,13 +27,38 @@ export class PipeGameObject extends GameObject {
     protected onEnable() {
         super.onEnable();
 
-        // Create pipe collider
-        const pipeVertices = [
-            new Vector2(0.5, this._height/2),
-            new Vector2(0.5, -this._height/2),
-            new Vector2(-0.5, -this._height/2),
-            new Vector2(-0.5, this._height/2),
-        ];
+        // Create pipe collider - adjust vertices to create proper gap
+        const halfWidth = PipeGameObject.PIPE_WIDTH / 2;
+        let pipeVertices: Vector2[];
+
+        // Create vertices relative to pipe's height
+        if (this._isTopPipe) {
+            pipeVertices = [
+                new Vector2(halfWidth, this._height/2),    // Top right
+                new Vector2(halfWidth, -this._height/2),   // Bottom right
+                new Vector2(-halfWidth, -this._height/2),  // Bottom left
+                new Vector2(-halfWidth, this._height/2),   // Top left
+            ];
+            // Position the pipe above the gap
+            this.transform.position.set(
+                this.transform.position.x, 
+                this._height/2 + PipeGameObject.GAP_SIZE/2, 
+                0
+            );
+        } else {
+            pipeVertices = [
+                new Vector2(halfWidth, this._height/2),    // Top right
+                new Vector2(halfWidth, -this._height/2),   // Bottom right
+                new Vector2(-halfWidth, -this._height/2),  // Bottom left
+                new Vector2(-halfWidth, this._height/2),   // Top left
+            ];
+            // Position the pipe below the gap
+            this.transform.position.set(
+                this.transform.position.x, 
+                -this._height/2 - PipeGameObject.GAP_SIZE/2, 
+                0
+            );
+        }
         
         this._collider = new PolygonCollider(pipeVertices);
         this.addBehavior(this._collider);
@@ -46,7 +73,7 @@ export class PipeGameObject extends GameObject {
         );
 
         // Position and scale the pipe
-        this.transform.scale.set(1, this._height, 1);
+        this.transform.scale.set(1, 1, 1); // Remove height scaling since it's in vertices
         
         // Flip top pipe by rotating 180 degrees
         if (this._isTopPipe) {

@@ -40,7 +40,9 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
 
         
         if (rigidbody) {
-            rigidbody.addForce(new Vector2(0, 100));
+            rigidbody.linearVelocity = new Vector2(0, 0);
+            rigidbody.addForce(new Vector2(0, -175));
+            rigidbody.step(0.016, new Vector2(0, -9.81));
         }
     }
 

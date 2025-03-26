@@ -17,6 +17,6 @@
   },
   "dependencies": {
     "reflect-metadata": "^0.2.2",
-    "sprunk-engine": "^0.4.8"
+    "sprunk-engine": "^0.4.9"
   }
 }

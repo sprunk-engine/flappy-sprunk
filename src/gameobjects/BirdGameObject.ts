@@ -1,7 +1,6 @@
 import { GameObject, SpriteRenderBehavior, PolygonCollider, Rigidbody, Vector2, Color } from "sprunk-engine";
 import { BirdLogicBehavior } from "../behaviors/flappybird/BirdLogicBehavior";
 import { FlappyBirdInputBehavior } from "../behaviors/flappybird/FlappyBirdInputBehavior";
-import { PolygonRenderDebugger } from "../../.lib.example/PolygonRenderDebugger.ts";
 
 /**
  * The main bird game object for Flappy Bird
@@ -23,10 +22,6 @@ export class BirdGameObject extends GameObject {
 
         this._collider = new PolygonCollider(birdVertices);
         this.addBehavior(this._collider);
-
-        // Add collision debug visualization
-        const debugVisual = new PolygonRenderDebugger(this._collider, Color.random(0.2));
-        this.addBehavior(debugVisual);
 
         // Add sprite renderer (visual representation)
         this.addBehavior(

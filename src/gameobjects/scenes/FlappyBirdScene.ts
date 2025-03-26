@@ -5,7 +5,6 @@ import { GroundGameObject } from "../GroundGameObject.ts";
 import { ScoreGameObject } from "../ScoreGameObject.ts";
 import { FlappGameManagerLogicBehavior } from "../../behaviors/flappybird/FlappGameManagerLogicBehavior.ts";
 import { GameState } from "../../models/GameState.ts";
-import { PolygonRenderDebugger } from "../../../.lib.example/PolygonRenderDebugger.ts";
 
 export class FlappyBirdScene extends GameObject {
     private _bird: BirdGameObject | null = null;
@@ -153,10 +152,6 @@ export class FlappyBirdScene extends GameObject {
 
         const collider = new PolygonCollider(boundaryVertices);
         boundary.addBehavior(collider);
-
-        // Add debug visualization
-        const debugVisual = new PolygonRenderDebugger(collider, Color.random(0.2));
-        boundary.addBehavior(debugVisual);
 
         // Position the boundary
         boundary.transform.position.set(0, yPosition, 0);

@@ -1,7 +1,6 @@
 import { GameObject, SpriteRenderBehavior, PolygonCollider, Vector2, Color } from "sprunk-engine";
 import { PipeLogicBehavior } from "../behaviors/flappybird/PipeLogicBehavior";
 import { ScrollingSpeedManagerDriven } from "../behaviors/flappybird/ScrollingSpeedManagerDriven";
-import { PolygonRenderDebugger } from "../../.lib.example/PolygonRenderDebugger.ts";
 /**
  * Represents a single pipe obstacle in Flappy Bird
  */
@@ -63,10 +62,6 @@ export class PipeGameObject extends GameObject {
         
         this._collider = new PolygonCollider(pipeVertices);
         this.addBehavior(this._collider);
-        
-        // Add collision debug visualization
-        const debugVisual = new PolygonRenderDebugger(this._collider, Color.random(0.2));
-        this.addBehavior(debugVisual);
 
         // Create sprite container to handle separate scaling
         const spriteContainer = new GameObject("SpriteContainer");

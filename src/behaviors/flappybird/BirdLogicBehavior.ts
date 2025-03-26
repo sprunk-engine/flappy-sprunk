@@ -11,10 +11,33 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
 
     private _flapForce: number = -175;
     private _physicsEnabled: boolean = false;
+    private static readonly MAX_ROTATION = Math.PI / 4; // 45 degrees
 
     protected onEnable() {
         super.onEnable();
         this._gameManager.birdTransform = this.gameObject.transform;
+    }
+
+    public tick(): void {
+        if (!this._physicsEnabled || !this._gameManager.isGamePlaying()) return;
+
+        const bird = this.gameObject as BirdGameObject;
+        const rigidbody = bird.getRigidbody();
+
+        if (rigidbody) {
+            // Get current velocity
+            const velocity = rigidbody.linearVelocity;
+            
+            // Calculate rotation based on Y velocity
+            // Normalize velocity to get rotation between -45 and 45 degrees
+            const rotation = Math.max(
+                -BirdLogicBehavior.MAX_ROTATION,
+                Math.min(BirdLogicBehavior.MAX_ROTATION, velocity.y * 0.1)
+            );
+            
+            // Apply rotation
+            this.gameObject.transform.rotation.setFromEulerAngles(0, 0, rotation);
+        }
     }
 
     /**
@@ -37,7 +60,6 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
         // Get rigidbody and apply force
         const bird = this.gameObject as BirdGameObject;
         const rigidbody = bird.getRigidbody();
-
         
         if (rigidbody) {
             rigidbody.linearVelocity = new Vector2(0, 0);

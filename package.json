@@ -11,12 +11,12 @@
     "generate-doc": "npx typedoc --excludeInternal false --entryPointStrategy expand --out ./doc/site/build ./src/"
   },
   "devDependencies": {
+    "typedoc": "^0.28.1",
     "typescript": "~5.7.2",
-    "vite": "^6.2.0",
-    "typedoc": "^0.28.1"
+    "vite": "^6.2.0"
   },
   "dependencies": {
     "reflect-metadata": "^0.2.2",
-    "sprunk-engine": "^0.4.6"
+    "sprunk-engine": "^0.4.8"
   }
 }

@@ -44,7 +44,6 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
      * Make the bird flap upwards using physics force
      */
     public flap(): void {
-        console.log("Flapping");
         // First notify game manager of flap attempt
         this._gameManager.wantToFlap();
         

@@ -88,7 +88,6 @@ export class FlappyBirdScene extends GameObject {
     }
 
     private onGameStateChange(state: GameState): void {
-        console.log("Game state changed to: " + state);
         if (state === GameState.PLAYING) {
             this.resetPositions();
             this._startTexts?.destroy();

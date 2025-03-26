@@ -21,7 +21,6 @@ export class ScrollingSpeedManagerDriven extends LogicBehavior<void>{
         super.onEnable();
         this._scrollingLogic.scrollSpeed = this._gameManager.gameSpeed;
         this._gameManager.onSpeedChange.addObserver((speed) => {
-            console.log("Speed changed to: " + speed);
             this._scrollingLogic.scrollSpeed = speed;
         });
     }

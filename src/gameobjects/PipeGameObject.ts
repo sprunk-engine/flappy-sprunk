@@ -9,8 +9,9 @@ export class PipeGameObject extends GameObject {
     private _isTopPipe: boolean;
     private _height: number;
     private _collider: PolygonCollider | null = null;
-    private static readonly PIPE_WIDTH = 1.0; // Width of the pipe
-    private static readonly GAP_SIZE = 3.0;   // Size of the gap between pipes
+    private static readonly PIPE_WIDTH = 1.0;   // Width of the pipe
+    private static readonly GAP_SIZE = 3.0;     // Size of the gap between pipes
+    private static readonly SPRITE_SCALE = 1.0; // Reduced scale factor for the sprite
 
     /**
      * Create a new pipe
@@ -67,17 +68,24 @@ export class PipeGameObject extends GameObject {
         const debugVisual = new PolygonRenderDebugger(this._collider, Color.random(0.2));
         this.addBehavior(debugVisual);
 
-        // Add pipe sprite
-        this.addBehavior(
-            new SpriteRenderBehavior("/assets/sprites/pipe-green.png")
-        );
+        // Create sprite container to handle separate scaling
+        const spriteContainer = new GameObject("SpriteContainer");
+        this.addChild(spriteContainer);
 
-        // Position and scale the pipe
-        this.transform.scale.set(1, 1, 1); // Remove height scaling since it's in vertices
+        // Add pipe sprite to container
+        const spriteRenderer = new SpriteRenderBehavior("/assets/sprites/pipe-green.png");
+        spriteContainer.addBehavior(spriteRenderer);
+        
+        // Scale and position the sprite container
+        spriteContainer.transform.scale.set(
+            PipeGameObject.SPRITE_SCALE, 
+            this._height * PipeGameObject.SPRITE_SCALE, 
+            1
+        );
         
         // Flip top pipe by rotating 180 degrees
         if (this._isTopPipe) {
-            this.transform.rotation.setFromEulerAngles(0, 0, Math.PI);
+            spriteContainer.transform.rotation.setFromEulerAngles(0, 0, Math.PI);
         }
 
         // Add pipe logic

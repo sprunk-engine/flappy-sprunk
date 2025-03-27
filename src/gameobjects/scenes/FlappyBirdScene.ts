@@ -1,4 +1,4 @@
-import { Camera, GameObject, TextRenderBehavior, PolygonCollider, Vector2, Color } from "sprunk-engine";
+import { Camera, GameObject, TextRenderBehavior, PolygonCollider, Vector2 } from "sprunk-engine";
 import { BirdGameObject } from "../BirdGameObject.ts";
 import { PipeSpawnerGameObject } from "../PipeSpawnerGameObject.ts";
 import { GroundGameObject } from "../GroundGameObject.ts";

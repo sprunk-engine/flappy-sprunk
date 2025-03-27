@@ -1,4 +1,4 @@
-import { GameObject, SpriteRenderBehavior, PolygonCollider, Rigidbody, Vector2, Color } from "sprunk-engine";
+import { GameObject, SpriteRenderBehavior, PolygonCollider, Rigidbody, Vector2 } from "sprunk-engine";
 import { BirdLogicBehavior } from "../behaviors/flappybird/BirdLogicBehavior";
 import { FlappyBirdInputBehavior } from "../behaviors/flappybird/FlappyBirdInputBehavior";
 

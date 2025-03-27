@@ -1,4 +1,4 @@
-import { GameObject, SpriteRenderBehavior, PolygonCollider, Vector2, Color } from "sprunk-engine";
+import { GameObject, SpriteRenderBehavior, PolygonCollider, Vector2 } from "sprunk-engine";
 import { PipeLogicBehavior } from "../behaviors/flappybird/PipeLogicBehavior";
 import { ScrollingSpeedManagerDriven } from "../behaviors/flappybird/ScrollingSpeedManagerDriven";
 /**

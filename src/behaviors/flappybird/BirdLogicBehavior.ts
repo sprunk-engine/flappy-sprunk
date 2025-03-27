@@ -9,7 +9,7 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
     @Inject(FlappGameManagerLogicBehavior, true)
     private _gameManager!: FlappGameManagerLogicBehavior;
 
-    private _flapForce: number = -175;
+    private _flapForce: number = 175;
     private _physicsEnabled: boolean = false;
     private static readonly MAX_ROTATION = Math.PI / 4; // 45 degrees
 

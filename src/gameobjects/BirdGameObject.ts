@@ -1,7 +1,8 @@
-import {GameObject, SpriteRenderBehavior, PolygonCollider, Vector2, Vector3} from "sprunk-engine";
+import {GameObject, PolygonCollider, Vector2, Vector3} from "sprunk-engine";
 import { BirdLogicBehavior } from "../behaviors/flappybird/BirdLogicBehavior";
 import { FlappyBirdInputBehavior } from "../behaviors/flappybird/FlappyBirdInputBehavior";
 import {RotateByVelocityOutputBehavior} from "../behaviors/output/RotateByVelocityOutputBehavior.ts";
+import {BirdAnimationGameObject} from "./BirdAnimationGameObject.ts";
 
 /**
  * The main bird game object for Flappy Bird
@@ -24,11 +25,6 @@ export class BirdGameObject extends GameObject {
         this._collider = new PolygonCollider(birdVertices);
         this.addBehavior(this._collider);
 
-        // Add sprite renderer (visual representation)
-        this.addBehavior(
-            new SpriteRenderBehavior("/assets/sprites/yellowbird-midflap.png")
-        );
-
         // Add bird logic
         this._logicBehavior = new BirdLogicBehavior();
         this.addBehavior(this._logicBehavior);
@@ -45,5 +41,7 @@ export class BirdGameObject extends GameObject {
         this._logicBehavior.onPhysicsEnabled.addObserver((rb) => {
             rotateByVelocityOutputBehavior.rigidbody = rb;
         });
+
+        this.addChild(new BirdAnimationGameObject("Animation"));
     }
 } 

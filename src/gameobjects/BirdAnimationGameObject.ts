@@ -17,5 +17,6 @@ export class BirdAnimationGameObject extends GameObject{
         this.addBehavior(new IntervalEmitterLogicBehavior(0.1));
 
         this.addBehavior(new BirdAnimationController("/assets/sprites/yellowbird-dead.png"));
+        this.transform.position.z = 0.001;
     }
 }

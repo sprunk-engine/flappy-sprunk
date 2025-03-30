@@ -1,0 +1,7 @@
+@startuml
+enum GameState {
+    START
+    PLAYING
+    GAMEOVER
+}
+@enduml

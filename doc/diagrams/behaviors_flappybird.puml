@@ -1,0 +1,57 @@
+@startuml
+enum GameState {
+    START
+    PLAYING
+    GAMEOVER
+}
+class FlappGameManagerLogicBehavior extends LogicBehavior {
+    +onGameStateChange: Event<GameState>
+    +onSpeedChange: Event<number>
+    +wantToFlap(): void
+    +increaseScore(): void
+    +getGameState(): GameState
+    +birdTransform: Transform | null
+    +birdTransform: Transform | null
+    +isGamePlaying(): boolean
+    +gameOver(): void
+    +gameSpeed: number
+}
+class BirdAnimationController extends LogicBehavior {
+    #onEnable(): void
+    #onDisable(): void
+}
+class BirdLogicBehavior extends LogicBehavior {
+    +onPhysicsEnabled: Event<Rigidbody>
+    +onFlap: Event<void>
+    #onEnable(): void
+    +tick(): void
+    +flap(): void
+    +die(): void
+}
+class FlappyBirdInputBehavior extends DeviceInputBehavior {
+    +onKeyboardKeyDown(key: string): void
+}
+class PipeLogicBehavior extends ScrollingLogicBehavior {
+    +tick(deltaTime: number): void
+}
+class ScrollingSpeedManagerDriven extends LogicBehavior {
+    #onEnable(): void
+}
+class PipeSpawnerLogicBehavior extends LogicBehavior {
+    #onEnable(): void
+    +tryToSpawnPipe(): void
+}
+FlappGameManagerLogicBehavior --> "1" GameState
+FlappGameManagerLogicBehavior --> "1" ScoreLogicBehavior
+BirdAnimationController --> "1" FlappGameManagerLogicBehavior
+BirdAnimationController --> "1" IntervalEmitterLogicBehavior
+BirdAnimationController --> "1" SpriteAnimationBehavior
+BirdAnimationController --> "1" GameState
+BirdLogicBehavior --> "1" FlappGameManagerLogicBehavior
+FlappyBirdInputBehavior --> "1" BirdLogicBehavior
+PipeLogicBehavior --> "1" FlappGameManagerLogicBehavior
+ScrollingSpeedManagerDriven --> "1" FlappGameManagerLogicBehavior
+ScrollingSpeedManagerDriven --> "1" ScrollingLogicBehavior
+PipeSpawnerLogicBehavior --> "1" FlappGameManagerLogicBehavior
+PipeSpawnerLogicBehavior --> "1" GameState
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+class IntervalEmitterLogicBehavior extends LogicBehavior {
+    #_timeSinceLastEmit: number
+    #_emitInterval: number
+    +tick(deltaTime: number): void
+    +pause(): void
+    +resume(): void
+    +changeInterval(interval: number): void
+    +isPlaying(): boolean
+    +getTimeSinceLastEmit(): number
+    +getCurrentInterval(): number
+    +setTimeSinceLastEmit(time: number): void
+}
+class AcceleratingEmitterLogicBehavior extends IntervalEmitterLogicBehavior {
+    +tick(deltaTime: number): void
+    +resetAcceleration(): void
+    +getCurrentInterval(): number
+}
+class ScoreLogicBehavior extends LogicBehavior {
+    +increaseScore(): void
+    +resetScore(): void
+}
+class SpriteAnimationBehavior extends LogicBehavior {
+    +totalFrames: number
+    #onEnable(): void
+    +showFrame(frame: number): void
+    +hideAll(): void
+}
+@enduml

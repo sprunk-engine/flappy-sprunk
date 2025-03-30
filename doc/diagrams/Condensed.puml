@@ -1,0 +1,132 @@
+@startuml
+package behaviors {
+    package camera {
+
+class FreeLookCameraController extends LogicBehavior {
+}
+class FreeLookCameraKeyboardMouseInput extends DeviceInputBehavior {
+}
+
+    }
+    package debug {
+
+class GridRenderBehavior extends LinesRenderBehavior
+
+    }
+    package flappybird {
+
+enum GameState {
+    START
+    PLAYING
+    GAMEOVER
+}
+class FlappGameManagerLogicBehavior extends LogicBehavior {
+}
+class BirdAnimationController extends LogicBehavior {
+}
+class BirdLogicBehavior extends LogicBehavior {
+}
+class FlappyBirdInputBehavior extends DeviceInputBehavior {
+}
+class PipeLogicBehavior extends ScrollingLogicBehavior {
+}
+class ScrollingSpeedManagerDriven extends LogicBehavior {
+}
+class PipeSpawnerLogicBehavior extends LogicBehavior {
+}
+
+    }
+    package logic {
+
+class IntervalEmitterLogicBehavior extends LogicBehavior {
+}
+class AcceleratingEmitterLogicBehavior extends IntervalEmitterLogicBehavior {
+}
+class ScoreLogicBehavior extends LogicBehavior {
+}
+class SpriteAnimationBehavior extends LogicBehavior {
+}
+
+    }
+    package output {
+
+enum GameState {
+    START
+    PLAYING
+    GAMEOVER
+}
+class GameOverSoundOutputBehavior extends AudioBehavior {
+}
+class PlayerSoundOutputBehavior extends AudioBehavior {
+}
+class RotateByVelocityOutputBehavior extends OutputBehavior {
+}
+class ScoreSoundOutputBehavior extends AudioBehavior {
+}
+
+    }
+    package text {
+
+class ScoreOutputBehavior extends OutputBehavior {
+}
+
+    }
+    package transform {
+
+class ScrollingLogicBehavior extends LogicBehavior {
+}
+class RepeatableScrollingLogicBehavior extends ScrollingLogicBehavior {
+}
+
+    }
+}
+package gameobjects {
+
+enum GameState {
+    START
+    PLAYING
+    GAMEOVER
+}
+class BirdAnimationGameObject extends GameObject {
+}
+class BirdGameObject extends GameObject {
+}
+class GizmoGameObject extends GameObject {
+}
+class GroundGameObject extends GameObject {
+}
+class PipeGameObject extends GameObject {
+}
+class PipeSpawnerGameObject extends GameObject {
+}
+class ScoreGameObject extends GameObject {
+}
+
+    package scenes {
+
+enum GameState {
+    START
+    PLAYING
+    GAMEOVER
+}
+class FlappyBirdScene extends GameObject {
+}
+
+    }
+}
+package models {
+
+enum GameState {
+    START
+    PLAYING
+    GAMEOVER
+}
+
+}
+package services {
+}
+package shaders {
+}
+package utils {
+}
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+enum GameState {
+    START
+    PLAYING
+    GAMEOVER
+}
+class GameOverSoundOutputBehavior extends AudioBehavior {
+    #onEnable(): void
+    +_playHit(): void
+}
+class PlayerSoundOutputBehavior extends AudioBehavior {
+    #onEnable(): void
+}
+class RotateByVelocityOutputBehavior extends OutputBehavior {
+    +rigidbody: Rigidbody | null
+    +tick(deltaTime: number): void
+}
+class ScoreSoundOutputBehavior extends AudioBehavior {
+    #onEnable(): void
+}
+GameOverSoundOutputBehavior --> "1" FlappGameManagerLogicBehavior
+PlayerSoundOutputBehavior --> "1" BirdLogicBehavior
+ScoreSoundOutputBehavior --> "1" ScoreLogicBehavior
+@enduml

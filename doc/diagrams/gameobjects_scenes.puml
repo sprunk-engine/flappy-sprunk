@@ -1,0 +1,13 @@
+@startuml
+enum GameState {
+    START
+    PLAYING
+    GAMEOVER
+}
+class FlappyBirdScene extends GameObject {
+    #onEnable(): void
+}
+FlappyBirdScene --> "1" BirdGameObject
+FlappyBirdScene --> "1" FlappGameManagerLogicBehavior
+FlappyBirdScene --> "1" GameState
+@enduml

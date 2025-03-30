@@ -1,0 +1,9 @@
+@startuml
+class ScrollingLogicBehavior extends LogicBehavior {
+    +scrollSpeed: number
+    +tick(deltaTime: number): void
+}
+class RepeatableScrollingLogicBehavior extends ScrollingLogicBehavior {
+    +tick(deltaTime: number): void
+}
+@enduml

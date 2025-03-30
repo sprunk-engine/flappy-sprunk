@@ -15,6 +15,7 @@ import { FlappGameManagerLogicBehavior } from "./FlappGameManagerLogicBehavior";
  */
 export class BirdLogicBehavior extends LogicBehavior<void> {
     public onPhysicsEnabled: Event<Rigidbody> = new Event();
+    public onFlap: Event<void> = new Event();
 
     @InjectGlobal(PhysicsGameEngineComponent)
     private _physicsEngine!: PhysicsGameEngineComponent;
@@ -48,6 +49,7 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
     public flap(): void {
         // First notify game manager of flap attempt
         this._gameManager.wantToFlap();
+        this.onFlap.emit();
         
         // If game isn't playing, don't apply forces
         if (!this._gameManager.isGamePlaying()) return;

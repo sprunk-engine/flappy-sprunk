@@ -1,6 +1,7 @@
 import { GameObject, TextRenderBehavior } from "sprunk-engine";
 import { ScoreLogicBehavior } from "../behaviors/logic/ScoreLogicBehavior.ts";
 import {ScoreOutputBehavior} from "../behaviors/text/ScoreOutputBehavior.ts";
+import {ScoreSoundOutputBehavior} from "../behaviors/output/ScoreSoundOutputBehavior.ts";
 
 /**
  * Game object that manages and displays the score
@@ -25,6 +26,8 @@ export class ScoreGameObject extends GameObject {
 
         // Add score output behavior
         this.addBehavior(new ScoreOutputBehavior());
+
+        this.addBehavior(new ScoreSoundOutputBehavior("/assets/sounds/point.ogg"));
     }
 
     /**

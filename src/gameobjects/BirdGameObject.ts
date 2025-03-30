@@ -3,6 +3,8 @@ import { BirdLogicBehavior } from "../behaviors/flappybird/BirdLogicBehavior";
 import { FlappyBirdInputBehavior } from "../behaviors/flappybird/FlappyBirdInputBehavior";
 import {RotateByVelocityOutputBehavior} from "../behaviors/output/RotateByVelocityOutputBehavior.ts";
 import {BirdAnimationGameObject} from "./BirdAnimationGameObject.ts";
+import {PlayerSoundOutputBehavior} from "../behaviors/output/PlayerSoundOutputBehavior.ts";
+import {GameOverSoundOutputBehavior} from "../behaviors/output/GameOverSoundOutputBehavior.ts";
 
 /**
  * The main bird game object for Flappy Bird
@@ -43,5 +45,7 @@ export class BirdGameObject extends GameObject {
         });
 
         this.addChild(new BirdAnimationGameObject("Animation"));
+        this.addBehavior(new PlayerSoundOutputBehavior("/assets/sounds/wing.ogg"));
+        this.addBehavior(new GameOverSoundOutputBehavior("/assets/sounds/hit.ogg"));
     }
 } 

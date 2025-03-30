@@ -1,4 +1,13 @@
-import {LogicBehavior, Vector2, Inject, PolygonCollider, Rigidbody, Event} from "sprunk-engine";
+import {
+    LogicBehavior,
+    Vector2,
+    Inject,
+    PolygonCollider,
+    Rigidbody,
+    Event,
+    InjectGlobal,
+    PhysicsGameEngineComponent
+} from "sprunk-engine";
 import { FlappGameManagerLogicBehavior } from "./FlappGameManagerLogicBehavior";
 
 /**
@@ -7,12 +16,14 @@ import { FlappGameManagerLogicBehavior } from "./FlappGameManagerLogicBehavior";
 export class BirdLogicBehavior extends LogicBehavior<void> {
     public onPhysicsEnabled: Event<Rigidbody> = new Event();
 
+    @InjectGlobal(PhysicsGameEngineComponent)
+    private _physicsEngine!: PhysicsGameEngineComponent;
     @Inject(FlappGameManagerLogicBehavior, true)
     private _gameManager!: FlappGameManagerLogicBehavior;
     @Inject(PolygonCollider)
     private _collider!: PolygonCollider;
 
-    private _flapForce: number = 175;
+    private _flapForce: number = 175*1.2;
     private _physicsEnabled: boolean = false;
     private _rigidbody: Rigidbody | null = null;
 
@@ -20,6 +31,7 @@ export class BirdLogicBehavior extends LogicBehavior<void> {
         super.onEnable();
 
         this._gameManager.birdTransform = this.gameObject.transform;
+        this._physicsEngine.gravity = new Vector2(0, -9.81*2);
 
         this._collider.onDataChanged.addObserver(() =>
             this.die()

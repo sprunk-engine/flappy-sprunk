@@ -9,6 +9,7 @@ const debug = true;
 const gameEngineWindow: GameEngineWindow = Sprunk.newGame(canvas, debug, [
     "InputGameEngineComponent",
     "RenderGameEngineComponent",
+    "PhysicsGameEngineComponent"
 ]);
 
 const startScene = new FlappyBirdScene();

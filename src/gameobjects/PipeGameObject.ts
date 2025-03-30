@@ -1,13 +1,16 @@
-import { GameObject, SpriteRenderBehavior } from "sprunk-engine";
+import { GameObject, SpriteRenderBehavior, PolygonCollider, Vector2 } from "sprunk-engine";
 import { PipeLogicBehavior } from "../behaviors/flappybird/PipeLogicBehavior";
-import {ScrollingSpeedManagerDriven} from "../behaviors/flappybird/ScrollingSpeedManagerDriven.ts";
-
+import { ScrollingSpeedManagerDriven } from "../behaviors/flappybird/ScrollingSpeedManagerDriven";
 /**
  * Represents a single pipe obstacle in Flappy Bird
  */
 export class PipeGameObject extends GameObject {
     private _isTopPipe: boolean;
     private _height: number;
+    private _collider: PolygonCollider | null = null;
+    private static readonly PIPE_WIDTH = 1.0;   // Width of the pipe
+    private static readonly GAP_SIZE = 3.0;     // Size of the gap between pipes
+    private static readonly SPRITE_SCALE = 1.0; // Reduced scale factor for the sprite
 
     /**
      * Create a new pipe
@@ -24,17 +27,60 @@ export class PipeGameObject extends GameObject {
     protected onEnable() {
         super.onEnable();
 
-        // Add pipe sprite
-        this.addBehavior(
-            new SpriteRenderBehavior("/assets/sprites/pipe-green.png")
-        );
+        // Create pipe collider - adjust vertices to create proper gap
+        const halfWidth = PipeGameObject.PIPE_WIDTH / 2;
+        let pipeVertices: Vector2[];
 
-        // Position and scale the pipe
-        this.transform.scale.set(1, this._height, 1);
+        // Create vertices relative to pipe's height
+        if (this._isTopPipe) {
+            pipeVertices = [
+                new Vector2(halfWidth, this._height/2),    // Top right
+                new Vector2(halfWidth, -this._height/2),   // Bottom right
+                new Vector2(-halfWidth, -this._height/2),  // Bottom left
+                new Vector2(-halfWidth, this._height/2),   // Top left
+            ];
+            // Position the pipe above the gap
+            this.transform.position.set(
+                this.transform.position.x, 
+                this._height/2 + PipeGameObject.GAP_SIZE/2, 
+                0
+            );
+        } else {
+            pipeVertices = [
+                new Vector2(halfWidth, this._height/2),    // Top right
+                new Vector2(halfWidth, -this._height/2),   // Bottom right
+                new Vector2(-halfWidth, -this._height/2),  // Bottom left
+                new Vector2(-halfWidth, this._height/2),   // Top left
+            ];
+            // Position the pipe below the gap
+            this.transform.position.set(
+                this.transform.position.x, 
+                -this._height/2 - PipeGameObject.GAP_SIZE/2, 
+                0
+            );
+        }
+        
+        this._collider = new PolygonCollider(pipeVertices);
+        this.addBehavior(this._collider);
+
+        // Create sprite container to handle separate scaling
+        const spriteContainer = new GameObject("SpriteContainer");
+        this.addChild(spriteContainer);
+
+        // Add pipe sprite to container
+        const spriteRenderer = new SpriteRenderBehavior("/assets/sprites/pipe-green.png", { minFilter: "nearest" });
+        spriteContainer.addBehavior(spriteRenderer);
+        
+        // Scale and position the sprite container
+        spriteContainer.transform.scale.set(
+            PipeGameObject.SPRITE_SCALE, 
+            this._height * PipeGameObject.SPRITE_SCALE, 
+            1
+        );
         
         // Flip top pipe by rotating 180 degrees
         if (this._isTopPipe) {
-            this.transform.rotation.setFromEulerAngles(0, 0, Math.PI);
+            spriteContainer.transform.rotation.setFromEulerAngles(0, 0, Math.PI);
         }
 
         // Add pipe logic

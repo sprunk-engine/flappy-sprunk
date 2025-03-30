@@ -1,58 +1,83 @@
-import {Inject, LogicBehavior, Vector3} from "sprunk-engine";
-import {FlappGameManagerLogicBehavior} from "./FlappGameManagerLogicBehavior.ts";
+import {
+    LogicBehavior,
+    Vector2,
+    Inject,
+    PolygonCollider,
+    Rigidbody,
+    Event,
+    InjectGlobal,
+    PhysicsGameEngineComponent
+} from "sprunk-engine";
+import { FlappGameManagerLogicBehavior } from "./FlappGameManagerLogicBehavior";
 
 /**
  * Bird physics and behavior logic
  */
 export class BirdLogicBehavior extends LogicBehavior<void> {
+    public onPhysicsEnabled: Event<Rigidbody> = new Event();
+    public onFlap: Event<void> = new Event();
+
+    @InjectGlobal(PhysicsGameEngineComponent)
+    private _physicsEngine!: PhysicsGameEngineComponent;
     @Inject(FlappGameManagerLogicBehavior, true)
     private _gameManager!: FlappGameManagerLogicBehavior;
+    @Inject(PolygonCollider)
+    private _collider!: PolygonCollider;
 
-    private _velocity: Vector3 = new Vector3(0, 0, 0);
-    private _gravity: number = 9.81*2;
-    private _flapStrength: number = 9.81/1.5;
-    private _rotation: number = 0;
+    private _flapForce: number = 175*1.2;
+    private _physicsEnabled: boolean = false;
+    private _rigidbody: Rigidbody | null = null;
 
     protected onEnable() {
         super.onEnable();
+
         this._gameManager.birdTransform = this.gameObject.transform;
+        this._physicsEngine.gravity = new Vector2(0, -9.81*2);
+
+        this._collider.onDataChanged.addObserver(() =>
+            this.die()
+        );
     }
 
-    public tick(deltaTime: number): void {
-        if(!this._gameManager.isGamePlaying()) return;
-        
-        // Apply gravity
-        this._velocity.y -= this._gravity * deltaTime;
-        
-        // Apply velocity to position
-        this.gameObject.transform.position.add(
-            new Vector3(0, this._velocity.y * deltaTime, 0)
-        );
-        
-        // Rotate bird based on velocity (diving down or flapping up)
-        this._rotation = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, this._velocity.y * 0.5));
-        this.gameObject.transform.rotation.setFromEulerAngles(0, 0, this._rotation);
-        
-        // Check if bird has hit the ground
-        if (this.gameObject.transform.position.y < -4) {
-            this.die();
-        }
+    public tick(): void {
+        if (!this._physicsEnabled || !this._gameManager.isGamePlaying()) return;
     }
-    
+
     /**
-     * Make the bird flap upwards
+     * Make the bird flap upwards using physics force
      */
     public flap(): void {
+        // First notify game manager of flap attempt
         this._gameManager.wantToFlap();
-        if(!this._gameManager.isGamePlaying()) return;
-        this._velocity.y = this._flapStrength;
+        this.onFlap.emit();
+        
+        // If game isn't playing, don't apply forces
+        if (!this._gameManager.isGamePlaying()) return;
+        
+        // Enable physics if this is the first flap
+        if (!this._physicsEnabled) {
+            this._physicsEnabled = true;
+            this.enablePhysics();
+        }
+        
+        // Get rigidbody and apply force
+        if (this._rigidbody) {
+            this._rigidbody.linearVelocity = new Vector2(0, 0);
+            this._rigidbody.addForce(new Vector2(0, this._flapForce));
+            this._rigidbody.step(0.016, new Vector2(0, -9.81));
+        }
     }
-    
+
     /**
      * Kill the bird and stop movement
      */
     public die(): void {
         this._gameManager.gameOver();
-        this._velocity.set(0, 0, 0);
+    }
+
+    private enablePhysics(): void {
+        this._rigidbody = new Rigidbody(this._collider, 0.5, 0.5);
+        this.onPhysicsEnabled.emit(this._rigidbody);
+        this.gameObject.addBehavior(this._rigidbody);
     }
 } 

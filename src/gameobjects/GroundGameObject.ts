@@ -6,12 +6,10 @@ import {ScrollingSpeedManagerDriven} from "../behaviors/flappybird/ScrollingSpee
  * The ground for Flappy Bird
  */
 export class GroundGameObject extends GameObject {
-    private _id : number;
     private _maxId : number;
 
-    constructor(id : number, maxId : number) {
+    constructor(maxId : number) {
         super("Ground");
-        this._id = id;
         this._maxId = maxId;
     }
 
@@ -20,7 +18,7 @@ export class GroundGameObject extends GameObject {
         
         // Add ground sprite renderer
         this.addBehavior(
-            new SpriteRenderBehavior("/assets/sprites/base.png")
+            new SpriteRenderBehavior("/assets/sprites/base.png", { minFilter: "nearest" })
         );
         
         // Scale the ground to cover the width of the screen

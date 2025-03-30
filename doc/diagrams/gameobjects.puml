@@ -1,0 +1,34 @@
+@startuml
+enum GameState {
+    START
+    PLAYING
+    GAMEOVER
+}
+class BirdAnimationGameObject extends GameObject {
+    #onEnable(): void
+}
+class BirdGameObject extends GameObject {
+    #onEnable(): void
+}
+class GizmoGameObject extends GameObject {
+    #onEnable(): void
+}
+class GroundGameObject extends GameObject {
+    #onEnable(): void
+}
+class PipeGameObject extends GameObject {
+    #onEnable(): void
+}
+class PipeSpawnerGameObject extends GameObject {
+    #onEnable(): void
+}
+class ScoreGameObject extends GameObject {
+    #onEnable(): void
+    +getLogic(): ScoreLogicBehavior
+}
+BirdGameObject --> "1" BirdLogicBehavior
+PipeSpawnerGameObject --> "1" FlappGameManagerLogicBehavior
+PipeSpawnerGameObject --> "1" AcceleratingEmitterLogicBehavior
+PipeSpawnerGameObject --> "1" GameState
+ScoreGameObject --> "1" ScoreLogicBehavior
+@enduml

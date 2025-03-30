@@ -1,6 +1,7 @@
-import { GameObject, SpriteRenderBehavior, PolygonCollider, Rigidbody, Vector2 } from "sprunk-engine";
+import {GameObject, SpriteRenderBehavior, PolygonCollider, Vector2, Vector3} from "sprunk-engine";
 import { BirdLogicBehavior } from "../behaviors/flappybird/BirdLogicBehavior";
 import { FlappyBirdInputBehavior } from "../behaviors/flappybird/FlappyBirdInputBehavior";
+import {RotateByVelocityOutputBehavior} from "../behaviors/output/RotateByVelocityOutputBehavior.ts";
 
 /**
  * The main bird game object for Flappy Bird
@@ -39,32 +40,10 @@ export class BirdGameObject extends GameObject {
         this.transform.position.set(-3, 0, 0);
         this.transform.scale.set(1, 1, 1);
 
-        this._collider.onDataChanged.addObserver(() =>
-            this._logicBehavior?.die()
-        );
-    }
-
-    /**
-     * Add rigidbody component to start physics simulation
-     */
-    public enablePhysics(): void {
-        if (this._collider) {
-            const rigidbody = new Rigidbody(this._collider, 0.5, 0.5);
-            this.addBehavior(rigidbody);
-        }
-    }
-
-    /**
-     * Get the bird logic behavior
-     */
-    public getBirdLogic(): BirdLogicBehavior | null {
-        return this._logicBehavior;
-    }
-
-    /**
-     * Get the rigidbody component
-     */
-    public getRigidbody(): Rigidbody | null {
-        return this.getFirstBehavior(Rigidbody);
+        const rotateByVelocityOutputBehavior = new RotateByVelocityOutputBehavior(Vector3.forward(), 0.1, Math.PI / 4);
+        this.addBehavior(rotateByVelocityOutputBehavior);
+        this._logicBehavior.onPhysicsEnabled.addObserver((rb) => {
+            rotateByVelocityOutputBehavior.rigidbody = rb;
+        });
     }
 } 

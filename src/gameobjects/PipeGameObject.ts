@@ -68,7 +68,7 @@ export class PipeGameObject extends GameObject {
         this.addChild(spriteContainer);
 
         // Add pipe sprite to container
-        const spriteRenderer = new SpriteRenderBehavior("/assets/sprites/pipe-green.png");
+        const spriteRenderer = new SpriteRenderBehavior("/assets/sprites/pipe-green.png", { minFilter: "nearest" });
         spriteContainer.addBehavior(spriteRenderer);
         
         // Scale and position the sprite container

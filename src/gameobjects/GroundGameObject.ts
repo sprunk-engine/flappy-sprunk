@@ -18,7 +18,7 @@ export class GroundGameObject extends GameObject {
         
         // Add ground sprite renderer
         this.addBehavior(
-            new SpriteRenderBehavior("/assets/sprites/base.png")
+            new SpriteRenderBehavior("/assets/sprites/base.png", { minFilter: "nearest" })
         );
         
         // Scale the ground to cover the width of the screen
